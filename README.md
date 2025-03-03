@@ -45,8 +45,8 @@ Este é um projeto **Angular** que consome a [Star Wars API (SWAPI)](https://swa
 ## Instalação e Execução
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/star-wars-explorer.git
-cd star-wars-explorer
+git clone https://github.com/WillianIsami/StarWarsApp.git
+cd StarWarsApp
 ```
 
 2. Instale as dependências:
