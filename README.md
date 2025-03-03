@@ -26,7 +26,7 @@ Este é um projeto **Angular** que consome a [Star Wars API (SWAPI)](https://swa
 ## Funcionalidades
 - Listagem de personagens com filtro por gênero
   - Utilização do Intersection Observer API para carregar os dados dinamicamente à medida que o usuário rola a página.
-  - Se o Intersection Observer não detectar interseção porque a tela já é grande o suficiente para exibir todos os itens de uma vez (ou seja, não há necessidade de scroll), é necessário verificar manualmente se o carregamento de novos personagens deve ser acionado.
+  - Se o Intersection Observer não detectar interseção porque a tela já é grande o suficiente para exibir todos os itens de uma vez (ou seja, não há necessidade de scroll), é necessário verificar manualmente se o carregamento de novos personagens deve ser acionado. Isso é feito com o método checkInitialLoad(), que é executado após o carregamento inicial da lista.
 - Exibição de detalhes dos personagens
   - Dentro dos detalhes é possível verificar quais filmes o personagem selecionado apareceu
 - Listagem de filmes com recomendações
