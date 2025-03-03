@@ -1,0 +1,14 @@
+<div class="flex flex-wrap justify-center gap-2 mb-4">
+  @for (option of genderOptions; track option.value) {
+    <button
+      class="px-4 py-2 rounded font-semibold transition
+             border border-gray-300 hover:bg-gray-200
+             focus:ring-2 focus:ring-blue-400
+             w-full sm:w-28 text-center"
+      [class.bg-blue-500]="selectedGender === option.value"
+      [class.text-white]="selectedGender === option.value"
+      (click)="onGenderFilter(option.value)">
+      {{ option.label }}
+    </button>
+  }
+</div>

@@ -1,0 +1,108 @@
+@if (character) {
+  <div class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="modal bg-white rounded-lg shadow-lg w-full max-w-md mx-4 overflow-hidden max-h-[90vh] flex flex-col">
+      <div class="modal-header bg-gray-100 p-4 flex justify-between items-center border-b flex-shrink-0">
+        <h2 class="text-xl font-bold">{{ character.name }}</h2>
+        <button class="close-btn bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 transition-colors" (click)="closeModal()">X</button>
+      </div>
+
+      <!-- Add scrollable container here -->
+      <div class="overflow-y-auto p-4 space-y-3 flex-grow">
+        <!-- Basic information -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-gray-50 p-2 rounded">
+            <span class="font-medium text-gray-700">Height:</span> {{ character.height }}
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <span class="font-medium text-gray-700">Mass:</span> {{ character.mass }}
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <span class="font-medium text-gray-700">Hair Color:</span> {{ character.hair_color }}
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <span class="font-medium text-gray-700">Skin Color:</span> {{ character.skin_color }}
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <span class="font-medium text-gray-700">Eye Color:</span> {{ character.eye_color }}
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <span class="font-medium text-gray-700">Birth Year:</span> {{ character.birth_year }}
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <span class="font-medium text-gray-700">Gender:</span> {{ character.gender }}
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <span class="font-medium text-gray-700">Homeworld:</span> {{ character.homeworldName }}
+          </div>
+        </div>
+
+        <!-- Lists section -->
+        <div class="mt-4 space-y-4">
+          <!-- Films -->
+          <div class="border rounded-lg overflow-hidden">
+            <div class="bg-blue-100 p-2 font-medium text-blue-800">Films</div>
+            <div class="p-3">
+              @if (character.filmNames?.length) {
+                <ul class="list-disc pl-5 space-y-1">
+                  @for(film of character.filmNames; track film) {
+                    <li>{{ film }}</li>
+                  }
+                </ul>
+              } @else {
+                <p class="text-gray-500 italic">No films available</p>
+              }
+            </div>
+          </div>
+
+          <!-- Species -->
+          <div class="border rounded-lg overflow-hidden">
+            <div class="bg-green-100 p-2 font-medium text-green-800">Species</div>
+            <div class="p-3">
+              @if (character.speciesNames?.length) {
+                <ul class="list-disc pl-5 space-y-1">
+                  @for(species of character.speciesNames; track species) {
+                    <li>{{ species }}</li>
+                  }
+                </ul>
+              } @else {
+                <p class="text-gray-500 italic">No species information</p>
+              }
+            </div>
+          </div>
+
+          <!-- Vehicles -->
+          <div class="border rounded-lg overflow-hidden">
+            <div class="bg-yellow-100 p-2 font-medium text-yellow-800">Vehicles</div>
+            <div class="p-3">
+              @if (character.vehicleNames?.length) {
+                <ul class="list-disc pl-5 space-y-1">
+                  @for (vehicle of character.vehicleNames; track vehicle) {
+                    <li>{{ vehicle }}</li>
+                  }
+                </ul>
+              } @else {
+                <p class="text-gray-500 italic">No vehicles</p>
+              }
+            </div>
+          </div>
+
+          <!-- Starships -->
+          <div class="border rounded-lg overflow-hidden">
+            <div class="bg-purple-100 p-2 font-medium text-purple-800">Starships</div>
+            <div class="p-3">
+              @if (character.starshipNames?.length) {
+                <ul class="list-disc pl-5 space-y-1">
+                  @for(starship of character.starshipNames; track starship) {
+                    <li>{{ starship }}</li>
+                  }
+                </ul>
+              } @else {
+                <p class="text-gray-500 italic">No starships</p>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,60 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-center text-2xl font-bold mb-6">Star Wars Characters</h2>
+  <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+    <div class="flex flex-col md:flex-row gap-4 items-start md:items-center">
+      <app-character-filter
+        [selectedGender]="selectedGender"
+        (genderChanged)="onGenderFilter($event)"
+        class="w-full">
+      </app-character-filter>
+    </div>
+  </div>
+
+  @if(!error) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+      @for (character of characters; track character.name) {
+        <div class="bg-white p-4 rounded shadow hover:shadow-lg transition-shadow">
+          <!-- Character avatar placeholder -->
+          <div class="h-24 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+            <span class="text-white font-bold text-xl">{{ character.name.charAt(0) }}</span>
+          </div>
+
+          <!-- Character info -->
+          <h2 class="text-xl font-semibold mb-2">{{ character.name }}</h2>
+          <div class="flex flex-wrap gap-1 mb-3">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              {{ character.gender !== 'n/a' ? character.gender : 'Unknown' }}
+            </span>
+            @if (character.birth_year && character.birth_year !== 'unknown') {
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                {{ character.birth_year }}
+              </span>
+            }
+          </div>
+          <button
+            class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full transition"
+            (click)="viewCharacterDetails(character)">
+            More details
+          </button>
+        </div>
+      }
+    </div>
+    @if (loading) {
+      <div class="flex justify-center">
+        <p class="text-lg">Loading characters...</p>
+      </div>
+    }
+  } @else if (error) {
+    <div class="bg-red-100 p-4 rounded">
+      <p class="text-red-700">Error loading characters: {{ error }}</p>
+    </div>
+  }
+  <div #observerTarget style="height: 1px; width: 100%;"></div>
+</div>
+
+@if (selectedCharacter) {
+  <app-character-details
+    [character]="selectedCharacter"
+    (close)="closeCharacterDetails()">
+  </app-character-details>
+}
