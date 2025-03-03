@@ -51,7 +51,7 @@ cd StarWarsApp
 
 2. Instale as dependências:
 ```bash
-npm install
+npm install --force
 ```
 
 3. Execute o servidor de desenvolvimento:
