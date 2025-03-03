@@ -1,0 +1,40 @@
+<header class="bg-gray-900 text-white p-4 shadow-md">
+  <div class="container mx-auto flex justify-between items-center relative">
+    <h1 class="text-xl font-bold">StarWarsApp</h1>
+
+    <!-- Mobile button -->
+    <button
+      class="block md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300"
+      (click)="toggleMenu()"
+      aria-label="Toggle Navigation"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+
+    <!-- Desktop -->
+    <nav class="hidden md:flex gap-4">
+      @for (route of allRoutes; track route.label) {
+        <a (click)="navigate(route.path)" (keydown)="navigate(route.path)" tabindex="0"
+          class="cursor-pointer rounded-md px-3 py-2 font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+          cNavLink>
+          {{ route.label }}
+        </a>
+      }
+    </nav>
+
+    <!-- Menu Dropdown (Mobile) -->
+    @if (menuOpen) {
+      <div class="absolute top-14 right-0 w-48 bg-gray-800 shadow-lg rounded-md p-2 md:hidden">
+        @for (route of allRoutes; track route.label) {
+          <a (click)="navigate(route.path); toggleMenu()" (keydown)="navigate(route.path); toggleMenu()" tabindex="0"
+            class="block px-4 py-2 text-white hover:bg-gray-700 rounded-md"
+            cNavLink>
+            {{ route.label }}
+          </a>
+        }
+      </div>
+    }
+  </div>
+</header>
