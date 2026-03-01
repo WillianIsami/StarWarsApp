@@ -46,6 +46,22 @@ Detalhes tecnicos completos: `docs/SWAPI_AND_MEDIA.md`.
 
 Detalhes tecnicos completos: `docs/PERFORMANCE.md`.
 
+## Screenshots
+
+Preview rapido:
+
+**Characters**
+
+![Desktop Characters](docs/screenshots/desktop-characters.png)
+
+**Films**
+
+![Desktop Films](docs/screenshots/desktop-films.png)
+
+**Planets**
+
+![Desktop Planets](docs/screenshots/desktop-planets.png)
+
 ## Stack
 
 - Angular 18
