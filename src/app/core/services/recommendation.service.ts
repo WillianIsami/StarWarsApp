@@ -11,37 +11,35 @@ export class RecommendationService {
   constructor(private swapiService: SwapiService) {}
 
   getAllFilms(): Observable<Film[]> {
-    return this.swapiService.getFilms().pipe(
-      map((response) =>
-        response.results.map((film: any) => ({
-          title: film.title,
-          episode_id: film.episode_id,
-          release_date: film.release_date,
-          characters: film.characters,
-        }))
-      )
-    );
+    return this.swapiService.getFilms().pipe(map((response) => response.results));
   }
 
   getFilmsByReleaseOrder(): Observable<Film[]> {
     return this.getAllFilms().pipe(
-      map((films) =>
-        films.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime())
-      )
+      map((films) => [...films].sort((a, b) =>
+        new Date(a.release_date).getTime() - new Date(b.release_date).getTime()
+      ))
     );
   }
 
   getFilmsByChronologicalOrder(): Observable<Film[]> {
     return this.getAllFilms().pipe(
-      map((films) => films.sort((a, b) => a.episode_id - b.episode_id))
+      map((films) => [...films].sort((a, b) => a.episode_id - b.episode_id))
     );
   }
 
   getFilmsByCharacter(characterUrl: string): Observable<Film[]> {
     return this.getAllFilms().pipe(
-      map((films) =>
-        films.filter((film) => film.characters.includes(characterUrl))
-      )
+      map((films) => films.filter((film) => film.characters.includes(characterUrl)))
     );
+  }
+
+  filterFilmsByTitle(films: Film[], searchTerm: string): Film[] {
+    const normalizedTerm = searchTerm.trim().toLowerCase();
+    if (!normalizedTerm) {
+      return films;
+    }
+
+    return films.filter((film) => film.title.toLowerCase().includes(normalizedTerm));
   }
 }

@@ -1,4 +1,5 @@
 export interface Planet {
+  id?: number;
   name: string;
   rotation_period: string;
   orbital_period: string;
@@ -13,6 +14,8 @@ export interface Planet {
   created: string;
   edited: string;
   url: string;
+  imageUrl?: string | null;
+  imageUrls?: string[];
 }
 
 export interface PlanetResponse {

@@ -1,0 +1,127 @@
+.films-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.films-hero,
+.films-controls {
+  padding: 1rem;
+}
+
+.films-hero__badges {
+  margin-top: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.films-controls {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr auto;
+  gap: 0.7rem;
+  align-items: end;
+}
+
+.films-controls label span {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--sw-text-muted);
+  font-size: 0.82rem;
+}
+
+.films-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.film-card {
+  border: 1px solid rgba(130, 190, 255, 0.3);
+  border-radius: 18px;
+  background: rgba(11, 19, 37, 0.85);
+  padding: 0.75rem;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0.8rem;
+}
+
+.film-card__poster {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(122, 181, 246, 0.35);
+  min-height: 290px;
+  background: rgba(17, 28, 52, 0.92);
+}
+
+.film-card__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.film-card__poster-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-family: 'Orbitron', sans-serif;
+  color: #eaf5ff;
+  font-size: 1.5rem;
+  background:
+    radial-gradient(circle at 28% 24%, rgba(117, 206, 255, 0.32), transparent 38%),
+    radial-gradient(circle at 83% 84%, rgba(250, 202, 94, 0.24), transparent 45%),
+    linear-gradient(145deg, rgba(31, 54, 95, 0.95), rgba(10, 18, 34, 0.95));
+}
+
+.film-card__content {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+}
+
+.film-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.film-card__content h3 {
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+}
+
+.film-card__content p {
+  margin: 0;
+  color: var(--sw-text-muted);
+}
+
+.film-card__crawl {
+  margin: 0.35rem 0 0;
+  border-left: 3px solid rgba(255, 213, 108, 0.68);
+  padding: 0.6rem 0.75rem;
+  border-radius: 0 12px 12px 0;
+  background: rgba(47, 36, 16, 0.32);
+  color: #f6edcf;
+  white-space: pre-line;
+}
+
+@media (max-width: 1080px) {
+  .films-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .film-card {
+    grid-template-columns: 1fr;
+  }
+
+  .film-card__poster {
+    min-height: 230px;
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 620px) {
+  .films-controls {
+    grid-template-columns: 1fr;
+  }
+}

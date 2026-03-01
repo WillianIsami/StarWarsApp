@@ -1,154 +1,127 @@
-<div class="w-full max-w-4xl mx-auto p-4">
-  <h2 class="text-2xl md:text-2xl font-bold mb-4 text-center text-gray-800">Planets Sorted by Number of Residents</h2>
+<section class="planets-page">
+  <section class="planets-hero sw-panel">
+    <div class="sw-section-title">
+      <p class="sw-eyebrow">Planetary Intel</p>
+      <h2>Painel de Planetas</h2>
+      <p>Rankeamento por residentes e populacao com filtros por terreno e busca textual.</p>
+    </div>
 
-  <!-- Desktop view (table) - Hidden on small screens -->
-  <div class="hidden md:block overflow-x-auto bg-white rounded-lg shadow">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
-        <tr>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Residents<span class="ml-1 text-blue-500">↓</span></th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rotation Period</th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orbital Period</th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Population</th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Climate</th>
-          <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Terrain</th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        @for(planet of planets; track planet.name) {
-          <tr class="hover:bg-gray-50 transition-colors">
-            <td class="px-4 py-3 whitespace-nowrap">
-              <div class="font-medium text-gray-900">{{ planet.name }}</div>
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap">
-              <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {{ planet.residents.length }}
-              </div>
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap">
-              <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {{ planet.rotation_period }}
-              </div>
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap">
-              <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {{ planet.orbital_period }}
-              </div>
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap">
-              <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {{ planet.population }}
-              </div>
-            </td>
-            <td class="px-4 py-3">
-              @if (planet.climate) {
-                <div class="flex flex-wrap gap-1">
-                  @for (climate of planet.climate.split(', '); track climate) {
-                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                      {{ climate }}
-                    </span>
-                  }
-                </div>
-              } @else {
-                <span class="text-gray-400">Unknown</span>
-              }
-            </td>
-            <td class="px-4 py-3">
-              @if (planet.terrain) {
-                <div class="flex flex-wrap gap-1">
-                  @for (terrain of planet.terrain.split(', '); track terrain) {
-                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
-                      {{ terrain }}
-                    </span>
-                  }
-                </div>
-              } @else {
-                <span class="text-gray-400">Unknown</span>
-              }
-            </td>
-          </tr>
+    <div class="planets-hero__stats">
+      <article>
+        <span>Total de planetas</span>
+        <strong>{{ allPlanets.length }}</strong>
+      </article>
+      <article>
+        <span>Maior populacao</span>
+        <strong>{{ mostPopulatedPlanet }}</strong>
+      </article>
+      <article>
+        <span>Populacao conhecida</span>
+        <strong>{{ knownPopulation }}</strong>
+      </article>
+      <article>
+        <span>Residentes cadastrados</span>
+        <strong>{{ totalResidentsRegistered }}</strong>
+      </article>
+    </div>
+  </section>
+
+  <section class="planets-controls sw-panel">
+    <label>
+      <span>Buscar planeta</span>
+      <input
+        type="search"
+        class="sw-input"
+        [ngModel]="searchTerm"
+        (ngModelChange)="onSearchTermChange($event)"
+        placeholder="Ex.: Tatooine, Naboo, Coruscant"
+      >
+    </label>
+
+    <label>
+      <span>Terreno</span>
+      <select class="sw-select" [ngModel]="selectedTerrain" (ngModelChange)="onTerrainChange($event)">
+        @for (terrain of terrainOptions; track terrain) {
+          <option [value]="terrain">{{ terrain }}</option>
         }
-      </tbody>
-    </table>
-  </div>
+      </select>
+    </label>
 
-  <!-- Mobile view (cards) - Shown only on small screens -->
-  <div class="md:hidden space-y-4">
-    @for(planet of planets; track planet.name) {
-      <div class="bg-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-start mb-2">
-          <h3 class="text-lg font-medium text-gray-900">{{ planet.name }}</h3>
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-            {{ planet.residents.length }} residents
-          </span>
-        </div>
+    <label>
+      <span>Ordenar por</span>
+      <select class="sw-select" [ngModel]="sortBy" (ngModelChange)="onSortChange($event)">
+        <option value="residents">Numero de residentes</option>
+        <option value="population">Populacao conhecida</option>
+        <option value="name">Nome (A-Z)</option>
+      </select>
+    </label>
 
-        <div class="space-y-2 text-sm">
-          <div>
-            <span class="font-medium text-gray-500">Rotation Period:</span>
-            <div class="mt-1 flex flex-wrap gap-1">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {{ planet.rotation_period }}
-              </span>
-            </div>
-          </div>
+    <button type="button" class="sw-button sw-button--ghost" (click)="clearFilters()">
+      Limpar filtros
+    </button>
+  </section>
 
-          <div>
-            <span class="font-medium text-gray-500">Orbital Period:</span>
-            <div class="mt-1 flex flex-wrap gap-1">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {{ planet.orbital_period }}
-              </span>
-            </div>
-          </div>
+  @if (loading) {
+    <div class="sw-status">Carregando dados planetarios...</div>
+  }
 
-          <div>
-            <span class="font-medium text-gray-500">Population:</span>
-            <div class="mt-1 flex flex-wrap gap-1">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {{ planet.population }}
-              </span>
-            </div>
-          </div>
+  @if (error) {
+    <div class="sw-empty-state">{{ error }}</div>
+  }
 
-          <div>
-            <span class="font-medium text-gray-500">Climate:</span>
-            <div class="mt-1 flex flex-wrap gap-1">
-              @if (planet.climate) {
-                @for (climate of planet.climate.split(', '); track climate) {
-                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-                    {{ climate }}
-                  </span>
-                }
-              } @else {
-                <span class="text-gray-400">Unknown</span>
-              }
-            </div>
-          </div>
-
-          <div>
-            <span class="font-medium text-gray-500">Terrain:</span>
-            <div class="mt-1 flex flex-wrap gap-1">
-              @if (planet.terrain) {
-                @for (terrain of planet.terrain.split(', '); track terrain) {
-                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
-                    {{ terrain }}
-                  </span>
-                }
-              } @else {
-                <span class="text-gray-400">Unknown</span>
-              }
-            </div>
-          </div>
-        </div>
-      </div>
+  @if (!loading && !error) {
+    @if (planets.length === 0) {
+      <div class="sw-empty-state">Nenhum planeta encontrado para os filtros escolhidos.</div>
     }
-  </div>
 
-  @if (!planets || planets.length === 0) {
-    <div class="text-center p-8 text-gray-500 bg-white rounded-lg shadow">
-      <p>No planets found</p>
+    <div class="planets-grid">
+      @for (planet of planets; track trackByPlanet($index, planet)) {
+        <article class="planet-card">
+          <div class="planet-card__media">
+            @if (hasPlanetImage(planet)) {
+              <img
+                [src]="getPlanetImage(planet)"
+                [alt]="'Imagem de ' + planet.name"
+                loading="lazy"
+                (error)="onPlanetImageError(planet)"
+              >
+            } @else {
+              <div class="planet-card__fallback">
+                {{ planet.name.charAt(0) }}
+              </div>
+            }
+          </div>
+
+          <div class="planet-card__content">
+            <h3>{{ planet.name }}</h3>
+
+            <div class="planet-card__stats">
+              <span class="sw-chip">Residentes: {{ planet.residents.length }}</span>
+              <span class="sw-chip">Populacao: {{ planet.population }}</span>
+              <span class="sw-chip">Rotacao: {{ planet.rotation_period }}</span>
+              <span class="sw-chip">Orbita: {{ planet.orbital_period }}</span>
+            </div>
+
+            <div>
+              <p class="planet-card__label">Clima</p>
+              <div class="planet-card__tags">
+                @for (climate of climateTags(planet); track climate) {
+                  <span class="sw-chip">{{ climate }}</span>
+                }
+              </div>
+            </div>
+
+            <div>
+              <p class="planet-card__label">Terreno</p>
+              <div class="planet-card__tags">
+                @for (terrain of terrainTags(planet); track terrain) {
+                  <span class="sw-chip">{{ terrain }}</span>
+                }
+              </div>
+            </div>
+          </div>
+        </article>
+      }
     </div>
   }
-</div>
+</section>

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FilmRecommendationsComponent } from './film-recommendations.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { of } from 'rxjs';
+import { RecommendationService, SwapiService } from '../../../core/services';
 
 describe('FilmRecommendationsComponent', () => {
   let component: FilmRecommendationsComponent;
@@ -11,7 +11,19 @@ describe('FilmRecommendationsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FilmRecommendationsComponent],
       providers: [
-        provideHttpClient(withFetch()),
+        {
+          provide: RecommendationService,
+          useValue: {
+            getAllFilms: () => of([]),
+            filterFilmsByTitle: (films: unknown[]) => films
+          }
+        },
+        {
+          provide: SwapiService,
+          useValue: {
+            getAllCharacters: () => of([])
+          }
+        }
       ]
     })
     .compileComponents();

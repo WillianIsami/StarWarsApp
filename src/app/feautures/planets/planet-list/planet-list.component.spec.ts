@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PlanetListComponent } from './planet-list.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { of } from 'rxjs';
+import { SwapiService } from '../../../core/services';
 
 describe('PlanetListComponent', () => {
   let component: PlanetListComponent;
@@ -9,10 +9,14 @@ describe('PlanetListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [],
-      declarations: [PlanetListComponent],
+      imports: [PlanetListComponent],
       providers: [
-        provideHttpClient(withFetch()),
+        {
+          provide: SwapiService,
+          useValue: {
+            getAllPlanets: () => of([])
+          }
+        }
       ]
     })
     .compileComponents();

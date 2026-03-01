@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CharacterListComponent } from './character-list.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { of } from 'rxjs';
+import { SwapiService } from '../../../core/services';
 
 describe('CharacterListComponent', () => {
   let component: CharacterListComponent;
@@ -11,7 +11,12 @@ describe('CharacterListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CharacterListComponent],
       providers: [
-        provideHttpClient(withFetch()),
+        {
+          provide: SwapiService,
+          useValue: {
+            getAllCharacters: () => of([])
+          }
+        }
       ]
     })
     .compileComponents();

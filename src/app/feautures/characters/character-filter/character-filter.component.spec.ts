@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CharacterFilterComponent } from './character-filter.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
 
 describe('CharacterFilterComponent', () => {
   let component: CharacterFilterComponent;
@@ -9,10 +8,7 @@ describe('CharacterFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CharacterFilterComponent],
-      providers: [
-        provideHttpClient(withFetch()),
-      ]
+      imports: [CharacterFilterComponent]
     })
     .compileComponents();
 

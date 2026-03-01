@@ -1,4 +1,5 @@
 export interface Character {
+  id?: number;
   name: string;
   height: string;
   mass: string;
@@ -15,6 +16,9 @@ export interface Character {
   created: string;
   edited: string;
   url: string;
+  imageUrl?: string | null;
+  imageUrls?: string[];
+  homeworldName?: string;
 
   filmNames?: string[];
   speciesNames?: string[];

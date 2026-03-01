@@ -1,0 +1,49 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.app-shell::before,
+.app-shell::after {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(72px);
+}
+
+.app-shell::before {
+  width: 220px;
+  height: 220px;
+  top: 140px;
+  right: -90px;
+  background: rgba(121, 216, 255, 0.23);
+}
+
+.app-shell::after {
+  width: 280px;
+  height: 280px;
+  bottom: -140px;
+  left: -120px;
+  background: rgba(255, 208, 94, 0.17);
+}
+
+.app-shell__content {
+  width: min(1220px, 92vw);
+  margin: 0 auto;
+  padding: 1rem 0 3rem;
+}
+
+@media (max-width: 768px) {
+  .app-shell__content {
+    width: min(96vw, 1220px);
+    padding-top: 0.6rem;
+  }
+}

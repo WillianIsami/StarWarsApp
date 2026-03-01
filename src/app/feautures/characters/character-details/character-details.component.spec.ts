@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CharacterDetailsComponent } from './character-details.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { of } from 'rxjs';
+import { SwapiService } from '../../../core/services';
 
 describe('CharacterDetailsComponent', () => {
   let component: CharacterDetailsComponent;
@@ -11,7 +11,13 @@ describe('CharacterDetailsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CharacterDetailsComponent],
       providers: [
-        provideHttpClient(withFetch()),
+        {
+          provide: SwapiService,
+          useValue: {
+            getNamesFromUrls: () => of([]),
+            getHomeworldName: () => of({ name: 'Unknown' })
+          }
+        }
       ]
     })
     .compileComponents();
