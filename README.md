@@ -1,65 +1,100 @@
-# StarWarsApp
+# Star Wars Holonet
 
-Este é um projeto **Angular** que consome a [Star Wars API (SWAPI)](https://swapi.dev/) para listar personagens, filmes e planetas do universo de Star Wars.
+Aplicacao Angular que consome a SWAPI para explorar personagens, filmes e planetas em uma interface Star Wars.
 
-## Tecnologias Utilizadas
-- Angular 18+
+## Status da documentacao
+
+A documentacao deste repositorio esta alinhada com o estado atual do codigo em 28/02/2026.
+
+## Principais funcionalidades
+
+- Personagens:
+  - busca por nome;
+  - filtro por genero;
+  - ordenacao por nome, nascimento, altura e massa;
+  - infinite scroll por lotes;
+  - modal com dados relacionados (filmes, especies, veiculos, naves e planeta natal).
+- Filmes:
+  - filtros por ordem de lancamento, ordem cronologica e por personagem;
+  - busca por titulo;
+  - leitura de opening crawl por item.
+- Planetas:
+  - busca textual;
+  - filtro por terreno;
+  - ordenacao por residentes, populacao e nome;
+  - metricas agregadas no topo da pagina.
+
+## Imagens com SWAPI
+
+A SWAPI nao fornece imagens nativamente. O projeto resolve isso com fallback em cadeia:
+
+1. `jsdelivr` (star-wars-guide)
+2. `raw.githubusercontent` (star-wars-guide)
+3. `starwars-visualguide`
+4. placeholder local de UI quando todas as URLs falham
+
+Detalhes tecnicos completos: `docs/SWAPI_AND_MEDIA.md`.
+
+## Performance
+
+- cache de payload final por chave;
+- deduplicacao de requests em voo com `shareReplay(1)`;
+- cache de nomes de recursos relacionados;
+- filtros/ordenacao locais apos carga;
+- `loading="lazy"` para imagens;
+- renderizacao incremental da lista de personagens.
+
+Detalhes tecnicos completos: `docs/PERFORMANCE.md`.
+
+## Stack
+
+- Angular 18
 - TypeScript
-- Angular Router
-- TailwindCSS
-- SWAPI (Star Wars API)
+- Tailwind CSS 3
+- SCSS
 - RxJS
+- SWAPI
 
-## Estrutura do projeto
-- core/: O módulo central da aplicação contém:
-  - models/ → Define os modelos de dados para personagens, filmes e planetas.
-  - services/ → Serviços responsáveis por chamadas à API e manipulação de dados.
-- feautures/: Aqui estão os módulos específicos de funcionalidades, divididos por domínio da aplicação (personagens, filmes e planetas).
-  - characters/
-    - character-list/ → Exibe a lista de personagens.
-    - character-details/ → Mostra os detalhes de um personagem selecionado.
-    - character-filter/ → Permite filtrar personagens por gênero.
-    - character-routing.module.ts → Define as rotas do módulo de personagens.
-- shared/: O diretório shared/ contém componentes reutilizáveis, como:
-  - page-header/ → Componente de cabeçalho para reutilização em várias páginas.
+## Estrutura de pastas
 
-## Funcionalidades
-- Listagem de personagens com filtro por gênero
-  - Utilização do Intersection Observer API para carregar os dados dinamicamente à medida que o usuário rola a página.
-  - Se o Intersection Observer não detectar interseção porque a tela já é grande o suficiente para exibir todos os itens de uma vez (ou seja, não há necessidade de scroll), é necessário verificar manualmente se o carregamento de novos personagens deve ser acionado. Isso é feito com o método checkInitialLoad(), que é executado após o carregamento inicial da lista.
-- Exibição de detalhes dos personagens
-  - Dentro dos detalhes é possível verificar quais filmes o personagem selecionado apareceu
-- Listagem de filmes com recomendações
-  - Disponibilidade de filtros por data de lançamento, ordem cronológica e por personagem (necessário escolher o personagem)
-- Listagem de planetas
-- Interface responsiva com **TailwindCSS**
-- Todos os itens utilizam in-memory cache para fazer as requisições somente uma vez.
+- `src/app/core/models`: interfaces de dados
+- `src/app/core/services`: consumo de API, cache e regras de negocio
+- `src/app/shared/components`: componentes compartilhados
+- `src/app/feautures/characters`: pagina de personagens
+- `src/app/feautures/films`: pagina de filmes
+- `src/app/feautures/planets`: pagina de planetas
+- `docs`: documentacao tecnica do projeto
 
-## Rotas do Aplicativo
-| Rota            | Descrição |
-|----------------|----------|
-| `/characters`  | Lista de personagens com filtro por gênero |
-| `/films`       | Lista de filmes + recomendações |
-| `/planets`     | Lista de planetas com base na quantidade de residents |
+## Rotas
 
-## Instalação e Execução
-1. Clone o repositório:
+- `/characters`
+- `/films`
+- `/planets`
+
+A rota raiz (`/`) redireciona para `/characters`.
+
+## Instalacao e execucao
+
 ```bash
 git clone https://github.com/WillianIsami/StarWarsApp.git
 cd StarWarsApp
-```
-
-2. Instale as dependências:
-```bash
-npm install --force
-```
-
-3. Execute o servidor de desenvolvimento:
-```bash
+npm install
 npm start
 ```
 
-4. Acesse no navegador:
+Aplicacao local: `http://localhost:4200`
+
+## Scripts
+
 ```bash
-http://localhost:4200
+npm start      # servidor de desenvolvimento
+npm run build  # build de producao
+npm run watch  # build em watch (development)
+npm test       # testes unitarios
 ```
+
+## Documentacao tecnica
+
+- [Arquitetura](docs/ARCHITECTURE.md)
+- [SWAPI e Midia](docs/SWAPI_AND_MEDIA.md)
+- [Performance](docs/PERFORMANCE.md)
